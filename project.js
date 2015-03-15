@@ -33,7 +33,7 @@ function calcRoute() {
   var start = UserLocation;
   var end = "282 2nd Street 4th floor, San Francisco, CA 94105";
     
-    /
+    /*
     var waypts = [];
     var checkboxArray = document.getElementById("waypoints");
     for (var i = 0; i < checkboxArray.length; i++) {
@@ -44,7 +44,8 @@ function calcRoute() {
         });
       }
     }
-    /
+    */
+    
   var selectedMODEbyUSER = document.getElementById("mode").value;
   var request = {
     origin: start,
