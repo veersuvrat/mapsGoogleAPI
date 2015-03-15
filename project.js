@@ -8,8 +8,7 @@ function initialize() {
   var mapOptions = {
     zoom: 6
   };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
   // find place related to office.
   // find closest coffee shops in and around location. 
