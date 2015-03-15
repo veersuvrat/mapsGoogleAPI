@@ -25,8 +25,8 @@ function initialize() {
 
   var request = {
     location: UserLocation,
-    radius: '50000',
-    types: ['store']
+    radius: 500,
+    types: 'coffee'
   };
   infowindow = new google.maps.InfoWindow();
   var service = new google.maps.places.PlacesService(map);
