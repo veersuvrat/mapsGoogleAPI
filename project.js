@@ -26,9 +26,9 @@ function initialize() {
   var request = {
     location: UserLocation,
     radius: '50000',
-    query: 'coffee'
+    types: ['store']
   };
-
+  infowindow = new google.maps.InfoWindow();
   var service = new google.maps.places.PlacesService(map);
   service.textSearch(request,callback);
 
@@ -36,8 +36,8 @@ function initialize() {
     console.log(AllCoffeeShops[i]);
   }
 
-  directionsDisplay = new google.maps.DirectionsRenderer();
-  directionsDisplay.setMap(map);
+  //directionsDisplay = new google.maps.DirectionsRenderer();
+  //directionsDisplay.setMap(map);
 
 }
 
