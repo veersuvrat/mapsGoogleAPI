@@ -27,9 +27,11 @@ function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
   directionsDisplay.setMap(map);
 
-  function calcRoute() {
-    var start = UserLocation;
-    var end = "282 2nd Street 4th floor, San Francisco, CA 94105";
+}
+
+function calcRoute() {
+  var start = UserLocation;
+  var end = "282 2nd Street 4th floor, San Francisco, CA 94105";
     
     /
     var waypts = [];
@@ -43,24 +45,21 @@ function initialize() {
       }
     }
     /
-    var request = {
-      origin: start,
-      destination: end,
-      //waypoints: waypts,
-      optimizeWaypoints: true,
-      travelMode: google.maps.TravelMode.TRANSIT
-    };
+  var selectedMODEbyUSER = document.getElementById("mode").value;
+  var request = {
+    origin: start,
+    destination: end,
+    //waypoints: waypts,
+    optimizeWaypoints: true,
+    travelMode: google.maps.TravelMode[selectedMODEbyUSER]
+  };
 
-    directionsService.route(request, function(result, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        directionsDisplay.setDirections(result);
-      }
-    });
-
-  }
-
+  directionsService.route(request, function(result, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(result);
+    }
+  });
 }
-
 
 var UserLocationFinder = function(position) {
     UserLocation = new google.maps.LatLng(position.coords.latitude,
