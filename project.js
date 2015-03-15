@@ -2,6 +2,7 @@ var map;
 var UserLocation;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
+var AllCoffeeShops = [];
 
 function initialize() {
 
@@ -9,7 +10,6 @@ function initialize() {
     zoom: 6
   };
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
   // find place related to office.
   // find closest coffee shops in and around location. 
   // check all routes with "waypoints"
@@ -23,10 +23,34 @@ function initialize() {
     handleNoGeolocation(false);
   }
 
+  var request = {
+    location: UserLocation,
+    radius: '50000',
+    query: 'coffee'
+  }
+
+  var service = new google.maps.places.PlacesService(map);
+  service.textSearch(request,callback);
+
+  for (var i = 0; i < AllCoffeeShops.length; i++) {
+    console.log(AllCoffeeShops[i]);
+  };
+
   directionsDisplay = new google.maps.DirectionsRenderer();
   directionsDisplay.setMap(map);
 
 }
+
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      var place = results[i];
+      AllCoffeeShops.push(place)
+    }
+  }
+}
+
+
 
 function calcRoute() {
   var start = UserLocation;
@@ -50,6 +74,7 @@ function calcRoute() {
     origin: start,
     destination: end,
     //waypoints: waypts,
+    waypoints: [AllCoffeeShops[0]],
     optimizeWaypoints: true,
     travelMode: google.maps.TravelMode[selectedMODEbyUSER]
   };
@@ -88,6 +113,7 @@ function handleNoGeolocation(errorFlag) {
     position: new google.maps.LatLng(37.8759, -122.2806),
     content: content
   };
+  UserLocation = options.position;
 
   var infowindow = new google.maps.InfoWindow(options);
   map.setCenter(options.position);
