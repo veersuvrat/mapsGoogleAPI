@@ -11,21 +11,6 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
-  // Try HTML5 geolocation
-
-  var UserLocationFinder = function(position) {
-    UserLocation = new google.maps.LatLng(position.coords.latitude,
-                                       position.coords.longitude);
-
-      var infowindow = new google.maps.InfoWindow({
-        map: map,
-        position: UserLocation,
-        content: 'Location found using HTML5.'
-      });
-
-      map.setCenter(UserLocation);
-  }
-
   // find place related to office.
   // find closest coffee shops in and around location. 
   // check all routes with "waypoints"
@@ -45,6 +30,8 @@ function initialize() {
   function calcRoute() {
     var start = UserLocation;
     var end = "282 2nd Street 4th floor, San Francisco, CA 94105";
+    
+    /
     var waypts = [];
     var checkboxArray = document.getElementById("waypoints");
     for (var i = 0; i < checkboxArray.length; i++) {
@@ -55,37 +42,38 @@ function initialize() {
         });
       }
     }
-
+    /
     var request = {
       origin: start,
       destination: end,
-      waypoints: waypts,
+      //waypoints: waypts,
       optimizeWaypoints: true,
       travelMode: google.maps.TravelMode.TRANSIT
     };
 
-    directionsService.route(request, function(response, status) {
+    directionsService.route(request, function(result, status) {
       if (status == google.maps.DirectionsStatus.OK) {
-        directionsDisplay.setDirections(response);
-        var route = response.routes[0];
-        var summaryPanel = document.getElementById("directions_panel");
-        summaryPanel.innerHTML = "";
-        // For each route, display summary information.
-        for (var i = 0; i < route.legs.length; i++) {
-          var routeSegment = i+1;
-          summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br />";
-          summaryPanel.innerHTML += route.legs[i].start_address + " to ";
-          summaryPanel.innerHTML += route.legs[i].end_address + "<br />";
-          summaryPanel.innerHTML += route.legs[i].distance.text + "<br /><br />";
-        }
+        directionsDisplay.setDirections(result);
       }
     });
+
   }
 
 }
 
 
+var UserLocationFinder = function(position) {
+    UserLocation = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
 
+      var infowindow = new google.maps.InfoWindow({
+        map: map,
+        position: UserLocation,
+        content: 'Location found using HTML5.'
+      });
+
+      map.setCenter(UserLocation);
+  }
 
 
 
